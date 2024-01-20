@@ -55,9 +55,9 @@ jobs:
       run:  zip -r test123.zip ./publish   
     - name: Copy Artifact to S3
       run: aws s3 cp test123.zip s3://rsys1234/ 
-    - run: aws lambda create-function \
+    - run: | 
+          aws lambda create-function \
            --function-name Hackathon-Serverless-Api \
-           --runtime dotnetcore6 \
            --role arn:aws:iam::011268468426:role/lambdanew
            --handler INVCOM.Serverless::INVCOM.Serverless.LambdaEntryPoint::FunctionHandlerAsync \
            --zip-file fileb://test1234.zip
