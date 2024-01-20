@@ -34,16 +34,30 @@ jobs:
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: us-east-1  
+        aws-region: us-west-2  
     - name: AWS CLI
       run: dotnet tool install -g Amazon.Lambda.Tools
     - name: Restore dependencies
       run: dotnet restore INVCOM.Serverless.csproj
     - name: Build
       run: dotnet build --no-restore INVCOM.Serverless.csproj         
-    #- name: test cases
-      #working-directory: ./AssessmentINVCOM-main/INVCOM/Source/Test/INVCOM.ServerlessTests
-      #run: dotnet test INVCOM.ServerlessTests.csproj --environment ASPNETCORE_ENVIRONMENT="Production"
-    - name: Deploy to Lambda
-      working-directory: ./AssessmentINVCOM-main/INVCOM/Source/App/INVCOM.Serverless
-      run: dotnet lambda deploy-serverless
+    - name: Publish
+      run: |
+           ls
+           dotnet publish -c Release -o publish
+    - name: Upload to S3
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-west-2
+    - name: Zip Artifact
+      run:  zip -r test123.zip ./publish   
+    - name: Copy Artifact to S3
+      run: aws s3 cp test123.zip s3://rsys1234/ 
+    - run: aws lambda create-function \
+           --function-name Hackathon-Serverless-Api \
+           --runtime dotnetcore6 \
+           --role arn:aws:iam::011268468426:role/lambdanew
+           --handler INVCOM.Serverless::INVCOM.Serverless.LambdaEntryPoint::FunctionHandlerAsync \
+           --zip-file fileb://test1234.zip
