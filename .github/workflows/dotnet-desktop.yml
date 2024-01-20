@@ -65,4 +65,5 @@ jobs:
     - run: |
         aws lambda update-function-code \
         --function-name lambda123 \
+        --s3-bucket rsys1234
         --zip-file fileb://./test1234.zip
