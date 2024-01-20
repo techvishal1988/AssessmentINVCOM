@@ -6,7 +6,7 @@
     "All the command line options for the Lambda command can be specified in this file."
   ],
   "profile": "Rushik AWS",
-  "region": "us-west-2",
+  "region": "us-east-1",
   "configuration": "Release",
   "s3-prefix": "INVCOM.Serverless/",
   "template": "serverless.template",
