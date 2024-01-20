@@ -44,7 +44,7 @@ jobs:
     - name: Publish
       run: |
            ls
-           dotnet publish -c Release -r linux-x64 -o publish
+           dotnet publish -c Release -r win-x64 -o publish
     - name: Upload to S3
       uses: aws-actions/configure-aws-credentials@v1
       with:
@@ -56,8 +56,7 @@ jobs:
     - name: Copy Artifact to S3
       run: aws s3 cp test123.zip s3://rsys1234/ 
     - run: | 
-          aws lambda create-function \
-           --function-name Hackathon-Serverless-Api \
-           --role arn:aws:iam::011268468426:role/lambdanew
+          aws lambda update-function-code \
+           --function-name lambda123 \
            --handler INVCOM.Serverless::INVCOM.Serverless.LambdaEntryPoint::FunctionHandlerAsync \
            --zip-file fileb://test1234.zip
