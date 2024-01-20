@@ -17,16 +17,6 @@
         "Policies": [
           "AWSLambda_FullAccess"
         ],
-        "Environment" : {
-        "Variables" : {
-        "ASPNETCORE_ENVIRONMENT": "Production",
-        "AWSConfigurationOptions__ClientId": "{{resolve:secretsmanager:UserManagementLambdaSecret:SecretString:ClientId}}",
-        "AWSConfigurationOptions__ClientSecret": "{{resolve:secretsmanager:UserManagementLambdaSecret:SecretString:ClientSecret}}",
-        "AWSConfigurationOptions__UserPoolClientId": "{{resolve:secretsmanager:UserManagementLambdaSecret:SecretString:UserPoolClientId}}",
-        "AWSConfigurationOptions__UserPoolId": "{{resolve:secretsmanager:UserManagementLambdaSecret:SecretString:UserPoolId}}",
-        "AWSConfigurationOptions__UserPoolClientSecret": "{{resolve:secretsmanager:UserManagementLambdaSecret:SecretString:UserPoolClientSecret}}"
-        }
-        },
         "Events": {
           "ProxyResource": {
             "Type": "Api",
