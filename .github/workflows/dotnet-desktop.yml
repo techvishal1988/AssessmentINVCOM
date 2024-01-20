@@ -62,4 +62,7 @@ jobs:
            zip -r test1234.zip ./*   
     - name: Copy Artifact to S3
       run: aws s3 cp test1234.zip s3://rsys1234/ 
-    - run: aws lambda update-function-code --function-name=lambda123 --zip-file=fileb://test1234.zip
+    - run: |
+        aws lambda update-function-code \
+        --function-name lambda123 \
+        --zip-file fileb://./test1234.zip
