@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <PackageId>Org.Framework.Entity</PackageId>
+    <Authors>Org.Framework.Entity</Authors>
+    <Company>Org</Company>
+    <Product>Org.Framework.Entity</Product>
+    <Description>Org.Framework.Entity</Description>
+    <Version>1.0.0</Version>    
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AWSSDK.DynamoDBv2" Version="3.7.300.30" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Framework.Constant\Framework.Constant.csproj" />
+  </ItemGroup>
+
+</Project>

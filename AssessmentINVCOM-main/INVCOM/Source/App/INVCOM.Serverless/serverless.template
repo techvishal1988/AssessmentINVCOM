@@ -1,0 +1,57 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Transform": "AWS::Serverless-2016-10-31",
+  "Description": "An AWS Serverless Application that uses the ASP.NET Core framework running in Amazon Lambda.",
+  "Parameters": {},
+  "Conditions": {},
+  "Resources": {
+    "AspNetCoreFunction": {
+      "Type": "AWS::Serverless::Function",
+      "Properties": {
+        "Handler": "INVCOM.Serverless::INVCOM.Serverless.LambdaEntryPoint::FunctionHandlerAsync",
+        "Runtime": "dotnet6",
+        "CodeUri": "",
+        "MemorySize": 256,
+        "Timeout": 30,
+        "Role": null,
+        "Policies": [
+          "AWSLambda_FullAccess"
+        ],
+        "Environment" : {
+        "Variables" : {
+        "ASPNETCORE_ENVIRONMENT": "Production",
+        "AWSConfigurationOptions__ClientId": "{{resolve:secretsmanager:UserManagementLambdaSecret:SecretString:ClientId}}",
+        "AWSConfigurationOptions__ClientSecret": "{{resolve:secretsmanager:UserManagementLambdaSecret:SecretString:ClientSecret}}",
+        "AWSConfigurationOptions__UserPoolClientId": "{{resolve:secretsmanager:UserManagementLambdaSecret:SecretString:UserPoolClientId}}",
+        "AWSConfigurationOptions__UserPoolId": "{{resolve:secretsmanager:UserManagementLambdaSecret:SecretString:UserPoolId}}",
+        "AWSConfigurationOptions__UserPoolClientSecret": "{{resolve:secretsmanager:UserManagementLambdaSecret:SecretString:UserPoolClientSecret}}"
+        }
+        },
+        "Events": {
+          "ProxyResource": {
+            "Type": "Api",
+            "Properties": {
+              "Path": "/{proxy+}",
+              "Method": "ANY"
+            }
+          },
+          "RootResource": {
+            "Type": "Api",
+            "Properties": {
+              "Path": "/",
+              "Method": "ANY"
+            }
+          }
+        }
+      }
+    }
+  },
+  "Outputs": {
+    "ApiURL": {
+      "Description": "API endpoint URL for Prod environment",
+      "Value": {
+        "Fn::Sub": "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
+      }
+    }
+  }
+}

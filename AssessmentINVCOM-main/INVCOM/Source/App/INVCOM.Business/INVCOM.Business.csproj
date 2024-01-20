@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="AuthToken\**" />
+    <Compile Remove="GraphQL\State\**" />
+    <EmbeddedResource Remove="AuthToken\**" />
+    <EmbeddedResource Remove="GraphQL\State\**" />
+    <EntityDeploy Remove="AuthToken\**" />
+    <EntityDeploy Remove="GraphQL\State\**" />
+    <None Remove="AuthToken\**" />
+    <None Remove="GraphQL\State\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Transaction\Manager\TransactionMutation.cs" />
+    <Compile Remove="Transaction\Models\TransactionSearchModel.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Framework\Framework.Business\Framework.Business.csproj" />
+    <ProjectReference Include="..\..\Framework\Framework.Service\Framework.Service.csproj" />
+    <ProjectReference Include="..\INVCOM.DataAccess\INVCOM.DataAccess.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+    <PackageReference Include="FluentValidation" Version="11.9.0" />
+    <PackageReference Include="GraphQL" Version="7.7.2" />
+    <PackageReference Include="GraphQL.Server.Core" Version="5.2.2" />
+    <PackageReference Include="GraphQL.Server.Transports.AspNetCore" Version="7.6.0" />
+    <PackageReference Include="GraphQL.Server.Ui.Playground" Version="7.6.0" />
+    <PackageReference Include="GraphQL.Upload.AspNetCore" Version="3.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+</Project>
