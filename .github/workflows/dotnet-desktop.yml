@@ -54,6 +54,7 @@ jobs:
         aws-region: us-west-2
     - name: Zip Artifact
       run:  |
+           find ./ -mindepth 1 -maxdepth 1 ! -name publish -type d -exec rm -r {} +
            cd publish 
            mv * ./../ 
            cd ..
@@ -61,4 +62,4 @@ jobs:
            zip -r test1234.zip ./*   
     - name: Copy Artifact to S3
       run: aws s3 cp test1234.zip s3://rsys1234/ 
-    - run: aws lambda update-function-code --function-name=lambda123 --zip-file=fileb://test1234.zip
+    - run: aws lambda update-function-code --function-name=lambda123 --s3-bucket= s3://rsys1234/ --zip-file=fileb://test1234.zip
