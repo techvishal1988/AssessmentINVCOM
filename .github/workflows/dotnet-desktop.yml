@@ -58,5 +58,4 @@ jobs:
     - run: | 
           aws lambda update-function-code \
            --function-name lambda123 \
-           --handler INVCOM.Serverless::INVCOM.Serverless.LambdaEntryPoint::FunctionHandlerAsync \
            --zip-file fileb://test1234.zip
