@@ -1,9 +1,9 @@
 name: .NET
 on:
   push:
-    branches: [ main ]
+    branches: [ 1main ]
   pull_request:
-    branches: [ main ]
+    branches: [ 1main ]
 defaults:
   run:
     working-directory: ./INVCOM/Source/App/INVCOM.DataSyncApi
