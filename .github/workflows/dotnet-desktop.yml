@@ -86,7 +86,7 @@ jobs:
           root_resource_id=$(aws apigateway get-resources --rest-api-id $api_id --query 'items[0].id' --output text)
 
           # Create a resource for the Lambda function
-          resource_id=$(aws apigateway create-resource --rest-api-id $api_id --parent-id $root_resource_id --path-part YourResourcePath --query 'id' --output text)
+          resource_id=$(aws apigateway create-resource --rest-api-id $api_id --parent-id $root_resource_id --path-part Prod --query 'id' --output text)
 
           # Get the Lambda function ARN
           lambda_arn=$(aws lambda get-function --function-name lambda123 --query 'Configuration.FunctionArn' --output text)
@@ -101,8 +101,8 @@ jobs:
           aws apigateway put-method-response --rest-api-id $api_id --resource-id $resource_id --http-method POST --status-code 200 --response-models "{}"
 
           # Deploy the API
-          deployment_id=$(aws apigateway create-deployment --rest-api-id $api_id --stage-name stage --query 'id' --output text)
+          deployment_id=$(aws apigateway create-deployment --rest-api-id $api_id --stage-name Prod --query 'id' --output text)
 
           # Output the API Gateway URL
-          endpoint_url=$(aws apigateway get-stage --rest-api-id $api_id --stage-name stage --query 'invokeUrl' --output text)
+          endpoint_url=$(aws apigateway get-stage --rest-api-id $api_id --stage-name Prod --query 'invokeUrl' --output text)
           echo "API Gateway URL: $endpoint_url"
