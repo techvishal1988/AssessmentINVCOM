@@ -77,32 +77,3 @@ jobs:
         #--environment Variables="{KEY1=123,KEY2=4567}" \
         #--timeout 30 \
         #--memory-size 256
-    - name: Create API Gateway
-      run: |
-          # Create the API Gateway
-          api_id=$(aws apigateway create-rest-api --name lambda123 --description "Your API Description" --query 'id' --output text)
-
-          # Get the root resource ID
-          root_resource_id=$(aws apigateway get-resources --rest-api-id $api_id --query 'items[0].id' --output text)
-
-          # Create a resource for the Lambda function
-          resource_id=$(aws apigateway create-resource --rest-api-id $api_id --parent-id $root_resource_id --path-part Prod --query 'id' --output text)
-
-          # Get the Lambda function ARN
-          lambda_arn=$(aws lambda get-function --function-name lambda123 --query 'Configuration.FunctionArn' --output text)
-
-          # Create an integration between the API Gateway and the Lambda function
-          aws apigateway put-integration --rest-api-id $api_id --resource-id $resource_id --http-method POST --type AWS_PROXY --integration-http-method POST --uri "arn:aws:apigateway:${AWS_REGION}:lambda:path/2015-03-31/functions/${lambda_arn}/invocations"
-
-          # Create a method for the resource
-          aws apigateway put-method --rest-api-id $api_id --resource-id $resource_id --http-method POST --authorization-type NONE
-
-          # Add the Lambda function as the integration for the method
-          aws apigateway put-method-response --rest-api-id $api_id --resource-id $resource_id --http-method POST --status-code 200 --response-models "{}"
-
-          # Deploy the API
-          deployment_id=$(aws apigateway create-deployment --rest-api-id $api_id --stage-name Prod --query 'id' --output text)
-
-          # Output the API Gateway URL
-          endpoint_url=$(aws apigateway get-stage --rest-api-id $api_id --stage-name Prod --query 'invokeUrl' --output text)
-          echo "API Gateway URL: $endpoint_url"
