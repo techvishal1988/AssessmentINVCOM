@@ -70,6 +70,6 @@ jobs:
          --zip-file fileb://./test1234.zip
         aws lambda update-function-configuration \
         --function-name lambda123 \
-        --environment Variables="{KEY1=123,KEY2=4567}"
-        --timeout 60 \
+        --environment Variables="{KEY1=123,KEY2=4567}" \
+        --timeout 30 \
         --memory-size 256
