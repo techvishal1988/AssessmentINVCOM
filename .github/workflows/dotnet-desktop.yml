@@ -65,7 +65,7 @@ jobs:
     - run: |
         aws lambda update-function-configuration \
         --function-name lambda123 \
-        --environment Variables="{KEY1=123,KEY2=4567,KEY3=$AWS_ACCESS_KEY_ID,AWS_SECRET_ACCESS_KEY= ${{ secrets.AWS_SECRET_ACCESS_KEY }}}" 
+        --environment Variables="{KEY1=123,KEY2=4567,KEY3=$AWS_ACCESS_KEY_ID,AWS_SECRET_ACCESS_KEY= $secrets.AWS_SECRET_ACCESS_KEY}" 
         
         aws lambda update-function-code \
         --function-name lambda123 \
