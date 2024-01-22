@@ -63,11 +63,13 @@ jobs:
     - name: Copy Artifact to S3
       run: aws s3 cp test1234.zip s3://rsys1234/ 
     - run: |
-        #aws lambda update-function-code \
-        #--function-name lambda123 \
-        #--s3-bucket rsys1234 \
-        #--s3-key test1234.zip \
-         #--zip-file fileb://./test1234.zip
+        aws lambda update-function-code \
+        --function-name lambda123 \
+        --s3-bucket rsys1234 \
+        --s3-key test1234.zip \
+         --zip-file fileb://./test1234.zip
         aws lambda update-function-configuration \
         --function-name lambda123 \
-        --environment Variables="{KEY1=123,KEY2=456}"
+        --environment Variables="{KEY1=123,KEY2=4567}"
+        --timeout 60 \
+        --memory-size 256
